@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Malika 🌻</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="/music/The 1975 - About You (Official).mp3" type="audio/mpeg">
+</audio>
+
+<!-- PETALS BG -->
+<div class="petal-bg" id="petalBg"></div>
+ 
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button id="lightbox-close" onclick="closeLightbox()">×</button>
+  <img id="lightbox-img" src="" alt="">
+  <div id="lightbox-caption"></div>
+</div>
+ 
+<!-- HINT POPUP -->
+<div id="hint-popup" class="hint-overlay">
+  <div class="hint-card">
+    <div class="hint-icon">💌</div>
+    <h3 class="hint-title">Petunjuk PIN</h3>
+    <div class="hint-clue">🙏 &nbsp;Tanggal pertama kita berdua ke <br>blok M</div>
+    <p class="hint-note">Masih bingung? Tanya langsung ke orangnya aja yaa 😊</p>
+    <button class="hint-close-btn" onclick="closeHint()">Oke, aku coba! 💪</button>
+  </div>
+</div>
+ 
+<!-- LOCK SCREEN -->
+<div id="lock-screen">
+  <div class="lock-petals" id="lockPetals"></div>
+  <div class="lock-card">
+    <div class="lock-icon">🔒</div>
+    <h2 class="lock-title">Sebuah kejutan kecil untukmu</h2>
+    <p class="lock-sub">Masukkan PIN ✨</p>
+    <div class="pin-dots" id="pinDots">
+      <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+      <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+    </div>
+    <div class="pin-grid">
+      <button class="pin-btn" onclick="enterPin('1')">1</button>
+      <button class="pin-btn" onclick="enterPin('2')">2</button>
+      <button class="pin-btn" onclick="enterPin('3')">3</button>
+      <button class="pin-btn" onclick="enterPin('4')">4</button>
+      <button class="pin-btn" onclick="enterPin('5')">5</button>
+      <button class="pin-btn" onclick="enterPin('6')">6</button>
+      <button class="pin-btn" onclick="enterPin('7')">7</button>
+      <button class="pin-btn" onclick="enterPin('8')">8</button>
+      <button class="pin-btn" onclick="enterPin('9')">9</button>
+      <button class="pin-btn empty"></button>
+      <button class="pin-btn" onclick="enterPin('0')">0</button>
+      <button class="pin-btn del" onclick="deletePin()">⌫</button>
+    </div>
+    <p class="lock-hint">Tidak tahu PINnya? <span onclick="showHint()">Minta petunjuk 💌</span></p>
+  </div>
+</div>
+ 
+<!-- SCROLL DOTS — 4 section (tanpa Song) -->
+<nav class="scroll-dots" id="scrollDots">
+  <button class="music-btn" id="musicBtn" onclick="toggleMusic()">🎵</button>
+  <div class="sdot active" onclick="goTo('#hero')" title="Home"></div>
+  <div class="sdot" onclick="goTo('#letter')" title="Surat"></div>
+  <div class="sdot" onclick="goTo('#gallery')" title="Kenangan"></div>
+  <div class="sdot" onclick="goTo('#quiz')" title="Quiz"></div>
+  <div class="sdot" onclick="goTo('#surprise')" title="Surprise"></div>
+</nav>
+ 
+<!-- MAIN SITE -->
+<div id="main-site">
+ 
+  <!-- HERO -->
+  <section id="hero" class="section">
+    <div class="hero-circles">
+      <div class="hero-circle hc1"></div>
+      <div class="hero-circle hc2"></div>
+      <div class="hero-circle hc3"></div>
+    </div>
+    <div class="floating-hearts" id="floatingHearts"></div>
+    <div style="position:relative;z-index:1;text-align:center;">
+      <div class="hero-badge">✦ &nbsp; <b>to princess</b> &nbsp; ✦</div>
+      <div class="hero-name" id="heroName">Syafira Malika Putri</div>
+      <h1 class="hero-hb">Happy<br><span>Birthday</span></h1>
+      <p class="hero-sub">Semoga hari ini seindah senyummu 🌸</p>
+      <button class="hero-btn" onclick="document.getElementById('letter').scrollIntoView({behavior:'smooth'})">
+        Buka Hadiahnya &nbsp;🎀
+      </button>
+    </div>
+    <div class="hero-scroll-hint">
+      <span class="scroll-arrow">↓</span>
+      <span style="font-size:0.65rem;letter-spacing:0.12em;">SCROLL</span>
+    </div>
+  </section>
+ 
+  <!-- LETTER -->
+  <section id="letter" class="section">
+    <p class="section-label">💌</p>
+    <h2 class="section-title">Surat <em>Untukmu</em></h2>
+    <div class="section-divider"></div>
+    <div class="letter-paper">
+      <p class="letter-dear" id="letterDear">Dear, Malika 🌻</p>
+      <div class="letter-body" id="letterBody">Selamat ulang tahun untuk wanita yang luar biasa.
+ 
+        Hari ini adalah momen yang tepat untuk merayakan bukan hanya bertambahnya usiamu, tetapi juga segala kebaikan, ketangguhan, dan keindahan yang selalu kamu bawa ke dunia ini.
+        
+        Kalau harus menggambarkan dirimu dalam satu hal, kamu itu seperti bunga matahari. Kamu selalu punya cara untuk membawa kehangatan, keceriaan, dan energi positif ke mana pun kamu pergi.
+        
+        Aku selalu kagum melihat bagaimana kamu menghadapi hari-hari, bagaimana kamu memperlakukan orang lain dengan ketulusanmu, dan bagaimana kamu tetap tegak berdiri melewati setiap proses pendewasaan.
+        
+        Terima kasih sudah tumbuh menjadi sosok yang begitu luar biasa dan selalu menginspirasi orang-orang di sekitarmu. Di usiamu yang baru ini, doa terbaikku adalah semoga dunia selalu memberikan alasan untukmu tetap tersenyum lebar.
+        
+        Semoga setiap impian yang sedang kamu perjuangkan didekatkan seiring berjalannya waktu, dan semoga hatimu selalu dipenuhi kedamaian yang utuh.
+        
+        Tetaplah menjadi 'bunga matahari' yang tangguh, anggun, dan selalu bersinar dengan caramu sendiri. Selamat merayakan hari lahirmu!
+        
+        ストレスを溜めず、水を飲み、1日に2回コーヒーを飲みましょう。😁</div>
+      <div class="letter-sign" id="letterSign">— Mus 👍</div>
+    </div>
+  </section>
+ 
+  <!-- GALLERY -->
+  <section id="gallery" class="section">
+    <div class="gallery-header">
+      <p class="section-label">📸</p>
+      <h2 class="section-title">Galery <em>Momen</em></h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="gallery-canvas" id="galleryCanvas"></div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="section">
+    <p class="section-label">🧠</p>
+    <h2 class="section-title">Tebak <em>Singkatan</em></h2>
+    <div class="section-divider"></div>
+    <p class="quiz-intro">Centang jika kepanjangan singkatan di bawah ini benar! ✅</p>
+    <div class="quiz-card" id="quizCard">
+      <div class="quiz-progress">
+        <div class="quiz-progress-bar" id="quizProgressBar"></div>
+      </div>
+      <p class="quiz-num" id="quizNum">1 / 4</p>
+      <div class="singkat-item" id="singkatItem">
+        <input type="checkbox" class="singkat-check" id="singkatCheck">
+        <div class="singkat-text">
+          <div class="singkat-abbr" id="singkatAbbr"></div>
+          <div class="singkat-long" id="singkatLong"></div>
+        </div>
+      </div>
+      <p class="quiz-feedback" id="quizFeedback"></p>
+      <button class="quiz-submit-btn" id="quizSubmitBtn" onclick="checkSatu()">
+        Konfirmasi ✨
+      </button>
+    </div>
+    <div class="quiz-done" id="quizDone" style="display:none;">
+      <div class="quiz-done-icon">🎉</div>
+      <h3 class="quiz-done-title">Yeay, semua benar!</h3>
+      <p class="quiz-done-sub2">Kamu dapat saldo gopay 50K. Selamat 🎁</p>
+      <button class="quiz-done-btn" onclick="document.getElementById('surprise').scrollIntoView({behavior:'smooth'})">
+        Lihat Berikutnya
+      </button>
+    </div>
+  </section>
+ 
+  <!-- SURPRISE -->
+  <section id="surprise" class="section surprise-locked">
+    <p class="section-label">🎁</p>
+    <h2 class="section-title">Mini <em>Surprises</em></h2>
+    <div class="section-divider"></div>
+    <div class="surprise-grid">
+      <div class="surprise-box" onclick="openSurprise(this)">
+        <span class="surprise-icon">💌</span>
+        <p class="surprise-label">Hai Bu Boss</p>
+        <p class="surprise-prompt">Ketuk untuk buka ✨</p>
+        <p class="surprise-msg">Hollaa, Salam hangat dari Raja Iblis 🌻💗</p>
+      </div>
+      <div class="surprise-box" onclick="openSurprise(this)">
+        <span class="surprise-icon">⭐</span>
+        <p class="surprise-label">Dari Aku</p>
+        <p class="surprise-prompt">Ketuk untuk buka ✨</p>
+        <p class="surprise-msg">Sebelumnya terimakasih yaa, aku senang sekali bisa mengenal kamuu</p>
+      </div>
+      <div class="surprise-box" onclick="openSurprise(this)">
+        <span class="surprise-icon">🌙</span>
+        <p class="surprise-label">Untuk Tuan Putri</p>
+        <p class="surprise-prompt">Ketuk untuk buka ✨</p>
+        <p class="surprise-msg">Kotak ini khusus dibuat untuk mengingatkanmu kalau kamu itu berharga banget. Semangat terus yaa menjalani harimu. 👑✨</p>
+      </div>
+      <div class="surprise-box" onclick="openSurprise(this)">
+        <span class="surprise-icon">🎯</span>
+        <p class="surprise-label">Harapanku</p>
+        <p class="surprise-prompt">Ketuk untuk buka ✨</p>
+        <p class="surprise-msg">Semoga tahun ini membawamu kebahagiaan yang belum pernah kamu rasakan sebelumnya.</p>
+      </div>
+      <div class="surprise-box" onclick="openSurprise(this)">
+        <span class="surprise-icon">‼️</span>
+        <p class="surprise-label">Warning</p>
+        <p class="surprise-prompt">Ketuk untuk buka ✨</p>
+        <p class="surprise-msg">Banyak-banyak minum air putih yaa jangan ngopi mulu, jangan stress stress inget gerd nyaa.</p>
+      </div>
+      <div class="surprise-box" onclick="openSurprise(this)">
+        <span class="surprise-icon">🎂</span>
+        <p class="surprise-label">Ucapan Spesial</p>
+        <p class="surprise-prompt">Ketuk untuk buka ✨</p>
+        <p class="surprise-msg">Selamat ulang tahun tuan putri. Semoga hidupmu selalu penuh cinta, tawa, dan momen-momen indah. 私はあなたがいなくて寂しいです</p>
+      </div>
+    </div>
+  </section>
+ 
+  <footer class="site-footer">Made with 💗 just for you &nbsp;·&nbsp; 🌻</footer>
+</div>
+ 
+<script>
+const CORRECT_PIN = "060326";
+const RECIPIENT_NAME = "Syafira Malika Putri";
+const YOUR_NAME = "Mus";
+ 
+let currentPin = "";
+const PIN_LENGTH = 6;
+ 
+// ── PETALS ──
+(function(){
+  const colors = ['#f4b8d0','#e8a0bf','#f9d5e5','#edd9b8','#f7c6d8'];
+  const bg = document.getElementById('petalBg');
+  for(let i=0;i<25;i++){
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.cssText = `left:${Math.random()*100}vw;background:${colors[i%colors.length]};animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*10}s;width:${5+Math.random()*7}px;height:${5+Math.random()*7}px;border-radius:${Math.random()>0.5?'50% 0':'0 50%'};`;
+    bg.appendChild(p);
+  }
+  const lp = document.getElementById('lockPetals');
+  for(let i=0;i<18;i++){
+    const p = document.createElement('div');
+    p.className = 'lock-petal';
+    p.style.cssText = `left:${Math.random()*100}vw;background:${colors[i%colors.length]};animation-duration:${6+Math.random()*10}s;animation-delay:${Math.random()*8}s;width:${4+Math.random()*6}px;height:${4+Math.random()*6}px;`;
+    lp.appendChild(p);
+  }
+})();
+ 
+// ── PIN ──
+function enterPin(d){
+  if(currentPin.length>=PIN_LENGTH)return;
+  currentPin+=d; updateDots();
+  if(currentPin.length===PIN_LENGTH)setTimeout(checkPin,200);
+}
+function deletePin(){ currentPin=currentPin.slice(0,-1); updateDots(); }
+function updateDots(){
+  document.querySelectorAll('.pin-dot').forEach((d,i)=>{
+    d.classList.toggle('filled',i<currentPin.length);
+    d.classList.remove('error');
+  });
+}
+function checkPin(){
+  if(currentPin===CORRECT_PIN){ unlock(); }
+  else{
+    document.querySelectorAll('.pin-dot').forEach(d=>d.classList.add('error'));
+    setTimeout(()=>{ currentPin=''; updateDots(); },800);
+  }
+}
+function unlock(){
+  const ls = document.getElementById('lock-screen');
+  const ms = document.getElementById('main-site');
+  ls.classList.add('unlocking');
+  ms.style.display = 'block';
+  setTimeout(() => {
+    ms.classList.add('visible');
+    ls.style.display = 'none';
+    triggerConfetti();
+    initFloatingHearts();
+    initScrollObserver();
+    initGallery();
+    initQuiz();
+
+    // Putar musik fade in
+    const music = document.getElementById('bgMusic');
+    music.volume = 0;
+    music.currentTime = 142;
+    music.play().catch(() => {});
+
+    let vol = 0;
+    const fadeIn = setInterval(() => {
+      if (vol < 0.4) {
+        vol = Math.min(vol + 0.01, 0.4);
+        music.volume = vol;
+      } else {
+        clearInterval(fadeIn);
+      }
+    }, 150);
+    document.getElementById('musicBtn').classList.add('visible');
+  }, 700);
+}
+function showHint(){ document.getElementById('hint-popup').classList.add('open'); }
+function closeHint(){ document.getElementById('hint-popup').classList.remove('open'); }
+ 
+// ── CONFETTI ──
+function triggerConfetti(){
+  const colors=['#c2698f','#e8a0bf','#c9a84c','#e8cc80','#f9dde9','#fff'];
+  for(let i=0;i<120;i++){
+    setTimeout(()=>{
+      const c=document.createElement('div');
+      c.className='confetti-piece';
+      c.style.cssText=`left:${Math.random()*100}vw;background:${colors[Math.floor(Math.random()*colors.length)]};width:${6+Math.random()*10}px;height:${6+Math.random()*10}px;border-radius:${Math.random()>0.5?'50%':'2px'};animation-duration:${2+Math.random()*3}s;animation-delay:${Math.random()*0.5}s;`;
+      document.body.appendChild(c);
+      setTimeout(()=>c.remove(),5000);
+    },i*20);
+  }
+}
+ 
+// ── FLOATING HEARTS ──
+function initFloatingHearts(){
+  const c=document.getElementById('floatingHearts');
+  const h=['💗','💖','💕','🌸','✨','💝','🌹'];
+  for(let i=0;i<18;i++){
+    const el=document.createElement('div');
+    el.className='fheart';
+    el.textContent=h[Math.floor(Math.random()*h.length)];
+    el.style.cssText=`left:${Math.random()*100}%;font-size:${0.7+Math.random()*1}rem;animation-duration:${7+Math.random()*10}s;animation-delay:${Math.random()*8}s;`;
+    c.appendChild(el);
+  }
+}
+ 
+// ── SCROLL OBSERVER ──
+function initScrollObserver(){
+  const sectionEls=document.querySelectorAll('.section');
+  const dots=document.querySelectorAll('.sdot');
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('in-view');
+        const idx=[...sectionEls].indexOf(e.target);
+        dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+      }
+    });
+  },{threshold:0.15});
+  sectionEls.forEach(s=>obs.observe(s));
+}
+function goTo(sel){ document.querySelector(sel).scrollIntoView({behavior:'smooth'}); }
+ 
+// ── GALLERY ──
+const MAX_PHOTOS = 28;
+const captions = [
+  '✨','💞','💕',
+  '🎉','🌸','🌙',
+  '💫','🌹','🌻',
+  '😄','💍','☀️',
+  '🍰','💎','🎈',
+  '🎊','✈️','🌟',
+  '💗','📸'
+];
+const emojis = ['✨','💞','💕','🎉','🌸','🌙','💫','🌹','🌻','😄','💍','☀️','🍰','💎','🎈','🎊','✈️','🌟','💗','📸'];
+ 
+const layouts = [
+  [[220,-4],[220,3],[220,-2],[220,2]],
+  [[220,5],[220,-4],[220,3],[220,-3]],
+  [[220,-5],[220,4],[220,-2],[220,3]],
+  [[220,3],[220,-5],[220,4],[220,-2]],
+  [[220,-3],[220,5],[220,-4],[220,2]],
+  [[220,4],[220,-3],[220,2],[220,-4]],
+  [[220,-2],[220,3],[220,-5],[220,4]],
+];
+
+const offsets = [
+  [[0,0],[0,0],[0,0],[0,0]],
+  [[0,0],[0,0],[0,0],[0,0]],
+  [[0,0],[0,0],[0,0],[0,0]],
+  [[0,0],[0,0],[0,0],[0,0]],
+  [[0,0],[0,0],[0,0],[0,0]],
+  [[0,0],[0,0],[0,0],[0,0]],
+  [[0,0],[0,0],[0,0],[0,0]],
+];
+ 
+let photos = [
+  { src: 'img/foto1.jpg', caption: '✨' },
+  { src: 'img/foto2.jpg', caption: '💞' },
+  { src: 'img/foto3.jpg', caption: '💕' },
+  { src: 'img/foto4.jpg', caption: '🎉' },
+  { src: 'img/foto5.jpg', caption: '🌸' },
+  { src: 'img/foto6.jpg', caption: '🌙' },
+  { src: 'img/foto7.jpg', caption: '💫' },
+  { src: 'img/foto8.jpg', caption: '🌹' },
+  { src: 'img/foto9.jpg', caption: '🌻' },
+  { src: 'img/foto10.jpg', caption: '😄' },
+  { src: 'img/foto11.jpg', caption: '💍' },
+  { src: 'img/foto12.jpg', caption: '☀️' },
+  { src: 'img/foto13.jpg', caption: '🍰' },
+  { src: 'img/foto14.jpg', caption: '💎' },
+  { src: 'img/foto15.jpg', caption: '🎈' },
+  { src: 'img/foto16.jpg', caption: '🎊' },
+  { src: 'img/foto17.jpg', caption: '✈️' },
+  { src: 'img/foto18.jpg', caption: '🌟' },
+  { src: 'img/foto19.jpg', caption: '💗' },
+  { src: 'img/foto20.jpg', caption: '📸' },
+  { src: 'img/foto21.jpg', caption: '✨' },
+  { src: 'img/foto22.jpg', caption: '💞' },
+  { src: 'img/foto23.jpg', caption: '💕' },
+  { src: 'img/foto24.jpg', caption: '🎉' },
+  { src: 'img/foto25.jpg', caption: '🌸' },
+  { src: 'img/foto26.jpg', caption: '💫' },
+  { src: 'img/foto27.jpg', caption: '🌹' },
+  { src: 'img/foto28.jpg', caption: '🌻' },
+];
+ 
+function initGallery(){ 
+  renderGallery();
+  setTimeout(() => {
+    initCarousel();
+  }, 100);
+}
+ 
+function renderGallery(){
+  const canvas = document.getElementById('galleryCanvas');
+  canvas.innerHTML = '';
+
+  let photoIdx = 0;
+
+  layouts.forEach((row, ri) => {
+    const rowEl = document.createElement('div');
+    rowEl.className = 'gallery-row';
+
+    row.forEach(([size, rot], ci) => {
+      if(photoIdx >= MAX_PHOTOS) return;
+
+      const card = document.createElement('div');
+      card.className = 'pol';
+      card.style.cssText = `transform: rotate(${rot}deg);`;
+
+      if(photoIdx < photos.length){
+        const p = photos[photoIdx];
+        card.innerHTML = `
+          <img class="pol-img" src="${p.src}" alt="">
+          <div class="pol-label">${p.caption}</div>
+        `;
+        const src = p.src, cap = p.caption;
+        card.onclick = () => openLightbox(src, cap);
+      } else {
+        card.innerHTML = `
+          <div class="pol-placeholder">
+            <span>${emojis[photoIdx % emojis.length]}</span>
+          </div>
+          <div class="pol-label">Foto ${photoIdx + 1}</div>
+        `;
+        card.style.opacity = '0.4';
+      }
+
+      rowEl.appendChild(card);
+      photoIdx++;
+    });
+
+    canvas.appendChild(rowEl);
+  });
+}
+ 
+function openLightbox(src,cap){
+  document.getElementById('lightbox').classList.add('open');
+  document.getElementById('lightbox-img').src=src;
+  document.getElementById('lightbox-caption').textContent=cap||'';
+}
+function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); }
+document.getElementById('lightbox').addEventListener('click',function(e){ if(e.target===this)closeLightbox(); });
+ 
+// ── QUIZ SINGKATAN ──
+const singkatanData = [
+  {
+    abbr: "NGL",
+    long: "Not Gonna Lie",
+    answer: true
+  },
+  {
+    abbr: "OOT",
+    long: "Out of Topic",
+    answer: true
+  },
+  {
+    abbr: "FYI",
+    long: "For Your Information",
+    answer: true
+  },
+  {
+    abbr: "BTW",
+    long: "You're So Beautiful😁",
+    answer: true
+  },
+];
+
+let quizIndex = 0;
+
+function initQuiz() {
+  quizIndex = 0;
+  renderSatu();
+}
+
+function renderSatu() {
+  const item = singkatanData[quizIndex];
+  document.getElementById('quizNum').textContent = `${quizIndex + 1} / ${singkatanData.length}`;
+  document.getElementById('quizProgressBar').style.width = `${(quizIndex / singkatanData.length) * 100}%`;
+  document.getElementById('singkatAbbr').textContent = item.abbr;
+  document.getElementById('singkatLong').textContent = item.long;
+  document.getElementById('quizFeedback').textContent = '';
+
+  // Reset checkbox
+  const chk = document.getElementById('singkatCheck');
+  chk.checked = false;
+  chk.classList.remove('correct-check', 'wrong-check');
+  chk.disabled = false;
+
+  // Animasi slide masuk
+  const card = document.getElementById('singkatItem');
+  card.style.transition = 'none';
+  card.style.opacity = '0';
+  card.style.transform = 'translateX(40px)';
+  setTimeout(() => {
+    card.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+    card.style.opacity = '1';
+    card.style.transform = 'translateX(0)';
+  }, 50);
+}
+
+function checkSatu() {
+  const chk = document.getElementById('singkatCheck');
+  const feedback = document.getElementById('quizFeedback');
+  const item = singkatanData[quizIndex];
+
+  const userChecked = chk.checked;
+  const shouldCheck = item.answer;
+
+  chk.classList.remove('correct-check', 'wrong-check');
+
+  if (userChecked === shouldCheck) {
+    chk.classList.add('correct-check');
+    chk.disabled = true;
+    feedback.style.color = '#4caf7d';
+    feedback.textContent = quizIndex === singkatanData.length - 1
+      ? 'Yeay betul! 🎉'
+      : 'Betul! Lanjut ke berikutnya... ✨';
+
+    setTimeout(() => {
+      quizIndex++;
+      if (quizIndex >= singkatanData.length) {
+        finishQuiz();
+      } else {
+        renderSatu();
+      }
+    }, 900);
+
+  } else {
+    chk.classList.add('wrong-check');
+    feedback.style.color = '#e07070';
+    feedback.textContent = 'Hmm, belum ceklis mba';
+    setTimeout(() => {
+      chk.classList.remove('wrong-check');
+      chk.checked = false;
+      feedback.textContent = '';
+    }, 1000);
+  }
+}
+
+function finishQuiz() {
+  document.getElementById('quizProgressBar').style.width = '100%';
+  setTimeout(() => {
+    document.getElementById('quizCard').style.display = 'none';
+    document.getElementById('quizDone').style.display = 'block';
+    document.getElementById('surprise').classList.add('unlocked');
+    document.getElementById('surpriseLockNotice').style.display = 'none';
+  }, 400);
+}
+
+// ── SURPRISE ──
+function openSurprise(el){
+  if(el.classList.contains('opened'))return;
+  el.classList.add('opened');
+  triggerMiniConfetti(el);
+}
+function triggerMiniConfetti(el){
+  const r=el.getBoundingClientRect();
+  const colors=['#c2698f','#c9a84c','#e8a0bf','#e8cc80'];
+  for(let i=0;i<30;i++){
+    const c=document.createElement('div');
+    c.className='confetti-piece';
+    c.style.cssText=`left:${r.left+r.width/2+(Math.random()-.5)*100}px;top:${r.top}px;background:${colors[Math.floor(Math.random()*colors.length)]};width:${5+Math.random()*8}px;height:${5+Math.random()*8}px;border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${1.5+Math.random()*2}s;`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),4000);
+  }
+}
+
+function toggleMusic(){
+  const music = document.getElementById('bgMusic');
+  const btn = document.getElementById('musicBtn');
+  if(music.paused){
+    music.play();
+    btn.textContent = '🎵';
+  } else {
+    music.pause();
+    btn.textContent = '🔇';
+  }
+}
+ 
+// ── KEYBOARD PIN ──
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('lock-screen').style.display==='none')return;
+  if(e.key>='0'&&e.key<='9')enterPin(e.key);
+  if(e.key==='Backspace')deletePin();
+});
+
+// ── CAROUSEL MOBILE ──
+function initCarousel() {
+  if (window.innerWidth > 768) return;
+
+  const canvas = document.getElementById('galleryCanvas');
+  if (photos.length === 0) return;
+
+  canvas.innerHTML = '';
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'carousel-wrapper';
+
+  const track = document.createElement('div');
+  track.className = 'carousel-track';
+
+  photos.forEach((p, i) => {
+    const slide = document.createElement('div');
+    slide.className = 'carousel-slide';
+
+    const card = document.createElement('div');
+    card.className = 'pol';
+    card.innerHTML = `
+      <img class="pol-img" src="${p.src}" alt="">
+      <div class="pol-label">${p.caption}</div>
+    `;
+    card.onclick = () => openLightbox(p.src, p.caption);
+
+    slide.appendChild(card);
+    track.appendChild(slide);
+  });
+
+  const controls = document.createElement('div');
+  controls.className = 'carousel-controls';
+  controls.innerHTML = `
+    <button class="carousel-btn" id="carPrev">‹</button>
+    <span class="carousel-counter" id="carCounter">1 / ${photos.length}</span>
+    <button class="carousel-btn" id="carNext">›</button>
+  `;
+
+  const dotsRow = document.createElement('div');
+  dotsRow.className = 'carousel-dots-row';
+  photos.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goSlide(i);
+    dotsRow.appendChild(dot);
+  });
+
+  wrapper.appendChild(track);
+  canvas.appendChild(wrapper);
+  canvas.appendChild(controls);
+  canvas.appendChild(dotsRow);
+
+  let current = 0;
+  const total = photos.length;
+
+  function goSlide(idx) {
+    current = (idx + total) % total;
+    track.style.transform = `translateX(-${current * 100}vw)`;
+    document.getElementById('carCounter').textContent = `${current + 1} / ${total}`;
+    document.querySelectorAll('.carousel-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  document.getElementById('carPrev').onclick = () => goSlide(current - 1);
+  document.getElementById('carNext').onclick = () => goSlide(current + 1);
+
+  let startX = 0;
+  track.addEventListener('touchstart', e => startX = e.touches[0].clientX, { passive: true });
+  track.addEventListener('touchend', e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) goSlide(diff > 0 ? current + 1 : current - 1);
+  }, { passive: true });
+}
+</script>
+</body>
+</html>
