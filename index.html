@@ -29,7 +29,7 @@
   <div class="hint-card">
     <div class="hint-icon">💌</div>
     <h3 class="hint-title">Petunjuk PIN</h3>
-    <div class="hint-clue">🙏 &nbsp;Tanggal pertama kita berdua ke <br>blok M</div>
+    <div class="hint-clue">🙏 &nbsp;Tanggal pertama kita berdua ke <br>blok M, awal maret</div>
     <p class="hint-note">Masih bingung? Tanya langsung ke orangnya aja yaa 😊</p>
     <button class="hint-close-btn" onclick="closeHint()">Oke, aku coba! 💪</button>
   </div>
@@ -40,7 +40,7 @@
   <div class="lock-petals" id="lockPetals"></div>
   <div class="lock-card">
     <div class="lock-icon">🔒</div>
-    <h2 class="lock-title">Sebuah kejutan kecil untukmu</h2>
+    <h2 class="lock-title">Birthday Gift kecil untuk kamu</h2>
     <p class="lock-sub">Masukkan PIN ✨</p>
     <div class="pin-dots" id="pinDots">
       <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
@@ -623,7 +623,7 @@ function initCarousel() {
   const track = document.createElement('div');
   track.className = 'carousel-track';
 
-  photos.forEach((p, i) => {
+  photos.forEach((p) => {
     const slide = document.createElement('div');
     slide.className = 'carousel-slide';
 
@@ -647,41 +647,48 @@ function initCarousel() {
     <button class="carousel-btn" id="carNext">›</button>
   `;
 
-  const dotsRow = document.createElement('div');
-  dotsRow.className = 'carousel-dots-row';
-  photos.forEach((_, i) => {
-    const dot = document.createElement('div');
-    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-    dot.onclick = () => goSlide(i);
-    dotsRow.appendChild(dot);
-  });
-
   wrapper.appendChild(track);
   canvas.appendChild(wrapper);
   canvas.appendChild(controls);
-  canvas.appendChild(dotsRow);
 
   let current = 0;
   const total = photos.length;
+  let autoTimer = null;
 
   function goSlide(idx) {
     current = (idx + total) % total;
     track.style.transform = `translateX(-${current * 100}vw)`;
     document.getElementById('carCounter').textContent = `${current + 1} / ${total}`;
-    document.querySelectorAll('.carousel-dot').forEach((d, i) => {
-      d.classList.toggle('active', i === current);
-    });
   }
 
-  document.getElementById('carPrev').onclick = () => goSlide(current - 1);
-  document.getElementById('carNext').onclick = () => goSlide(current + 1);
+  function startAuto() {
+    autoTimer = setInterval(() => {
+      goSlide(current + 1);
+    }, 3000);
+  }
 
+  function resetAuto() {
+    clearInterval(autoTimer);
+    startAuto();
+  }
+
+  document.getElementById('carPrev').onclick = () => { goSlide(current - 1); resetAuto(); };
+  document.getElementById('carNext').onclick = () => { goSlide(current + 1); resetAuto(); };
+
+  // Swipe support
   let startX = 0;
-  track.addEventListener('touchstart', e => startX = e.touches[0].clientX, { passive: true });
+  track.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    clearInterval(autoTimer);
+  }, { passive: true });
   track.addEventListener('touchend', e => {
     const diff = startX - e.changedTouches[0].clientX;
     if (Math.abs(diff) > 50) goSlide(diff > 0 ? current + 1 : current - 1);
+    startAuto();
   }, { passive: true });
+
+  // Mulai auto slide
+  startAuto();
 }
 </script>
 </body>
