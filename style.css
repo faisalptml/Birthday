@@ -629,55 +629,55 @@ body {
 
 /* ─── RESPONSIVE ─── */
 @media(max-width:768px){
-  #gallery { padding: 80px 0 60px; }
+  #gallery { padding: 60px 0 60px; }
   .gallery-canvas { padding: 0; overflow: hidden; }
   .gallery-row { display: none; }
 
-  .carousel-wrapper {
-    position: relative; width: 100%;
-    overflow: hidden; padding: 20px 0 40px;
+  /* ── AUTO-SCROLL STRIP ── */
+  .auto-strip-wrapper {
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 16px;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
   }
-  .carousel-track {
+
+  .auto-strip-track {
     display: flex;
-    transition: transform 0.4s cubic-bezier(.4,0,.2,1);
-    will-change: transform;
+    gap: 12px;
+    width: max-content;
+    padding: 8px 0;
   }
-  .carousel-slide {
-    min-width: 100vw;
-    display: flex; align-items: center; justify-content: center;
-    padding: 0 32px;
+
+  /* Strip 1: gerak ke kiri (tampak mengalir ke kanan) */
+  .auto-strip-track[data-direction="right"] {
+    animation: stripScrollLeft 28s linear infinite;
   }
-  .carousel-slide .pol {
-    width: 100%; max-width: 300px;
+
+  /* Strip 2: gerak ke kanan (tampak mengalir ke kiri) */
+  .auto-strip-track[data-direction="left"] {
+    animation: stripScrollRight 28s linear infinite;
+  }
+
+  @keyframes stripScrollLeft {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @keyframes stripScrollRight {
+    0%   { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+
+  .auto-strip-slide {
+    flex-shrink: 0;
+    width: 160px;
+  }
+
+  .auto-strip-slide .pol {
+    width: 100%;
     transform: rotate(0deg) !important;
   }
-  .carousel-controls {
-    display: flex; align-items: center; justify-content: center;
-    gap: 16px; margin-top: 16px;
-  }
-  .carousel-btn {
-    width: 40px; height: 40px; border-radius: 50%;
-    border: 1.5px solid var(--rose);
-    background: white; color: var(--rose-d);
-    font-size: 1rem; cursor: pointer; transition: all 0.2s;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .carousel-btn:hover { background: var(--rose-d); color: white; }
-  .carousel-counter {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic; font-size: 0.9rem;
-    color: var(--ink-l); min-width: 48px; text-align: center;
-  }
-  .carousel-dots-row {
-    display: flex; justify-content: center;
-    gap: 6px; margin-top: 12px; flex-wrap: wrap; padding: 0 16px;
-  }
-  .carousel-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--blush); border: 1px solid var(--rose);
-    cursor: pointer; transition: all 0.2s;
-  }
-  .carousel-dot.active { background: var(--rose-d); transform: scale(1.3); }
 }
 
 @media(max-width:600px){

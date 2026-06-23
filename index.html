@@ -617,78 +617,47 @@ function initCarousel() {
 
   canvas.innerHTML = '';
 
-  const wrapper = document.createElement('div');
-  wrapper.className = 'carousel-wrapper';
+  const half = Math.ceil(photos.length / 2);
+  const group1 = photos.slice(0, half);       // foto 1-14 → arah kanan
+  const group2 = photos.slice(half);           // foto 15-28 → arah kiri
 
-  const track = document.createElement('div');
-  track.className = 'carousel-track';
+  function buildStrip(photoList, direction) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'auto-strip-wrapper';
 
-  photos.forEach((p) => {
-    const slide = document.createElement('div');
-    slide.className = 'carousel-slide';
+    const track = document.createElement('div');
+    track.className = 'auto-strip-track';
+    track.dataset.direction = direction; // 'right' atau 'left'
 
-    const card = document.createElement('div');
-    card.className = 'pol';
-    card.innerHTML = `
-      <img class="pol-img" src="${p.src}" alt="">
-      <div class="pol-label">${p.caption}</div>
-    `;
-    card.onclick = () => openLightbox(p.src, p.caption);
+    // Duplikat foto agar loop mulus (2x)
+    [...photoList, ...photoList].forEach((p) => {
+      const slide = document.createElement('div');
+      slide.className = 'auto-strip-slide';
 
-    slide.appendChild(card);
-    track.appendChild(slide);
+      const card = document.createElement('div');
+      card.className = 'pol';
+      card.innerHTML = `
+        <img class="pol-img" src="${p.src}" alt="" loading="lazy">
+        <div class="pol-label">${p.caption}</div>
+      `;
+      card.onclick = () => openLightbox(p.src, p.caption);
+
+      slide.appendChild(card);
+      track.appendChild(slide);
+    });
+
+    wrapper.appendChild(track);
+    return wrapper;
+  }
+
+  canvas.appendChild(buildStrip(group1, 'right'));
+  canvas.appendChild(buildStrip(group2, 'left'));
+
+  // Pause on touch
+  canvas.querySelectorAll('.auto-strip-track').forEach(track => {
+    track.addEventListener('touchstart', () => track.style.animationPlayState = 'paused', { passive: true });
+    track.addEventListener('touchend',   () => track.style.animationPlayState = 'running', { passive: true });
   });
-
-  const controls = document.createElement('div');
-  controls.className = 'carousel-controls';
-  controls.innerHTML = `
-    <button class="carousel-btn" id="carPrev">‹</button>
-    <span class="carousel-counter" id="carCounter">1 / ${photos.length}</span>
-    <button class="carousel-btn" id="carNext">›</button>
-  `;
-
-  wrapper.appendChild(track);
-  canvas.appendChild(wrapper);
-  canvas.appendChild(controls);
-
-  let current = 0;
-  const total = photos.length;
-  let autoTimer = null;
-
-  function goSlide(idx) {
-    current = (idx + total) % total;
-    track.style.transform = `translateX(-${current * 100}vw)`;
-    document.getElementById('carCounter').textContent = `${current + 1} / ${total}`;
-  }
-
-  function startAuto() {
-    autoTimer = setInterval(() => {
-      goSlide(current + 1);
-    }, 3000);
-  }
-
-  function resetAuto() {
-    clearInterval(autoTimer);
-    startAuto();
-  }
-
-  document.getElementById('carPrev').onclick = () => { goSlide(current - 1); resetAuto(); };
-  document.getElementById('carNext').onclick = () => { goSlide(current + 1); resetAuto(); };
-
-  // Swipe support
-  let startX = 0;
-  track.addEventListener('touchstart', e => {
-    startX = e.touches[0].clientX;
-    clearInterval(autoTimer);
-  }, { passive: true });
-  track.addEventListener('touchend', e => {
-    const diff = startX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) goSlide(diff > 0 ? current + 1 : current - 1);
-    startAuto();
-  }, { passive: true });
-
-  // Mulai auto slide
-  startAuto();
 }
 </script>
 </body>
